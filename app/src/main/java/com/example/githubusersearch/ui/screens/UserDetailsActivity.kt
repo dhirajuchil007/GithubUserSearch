@@ -35,12 +35,20 @@ class UserDetailsActivity : AppCompatActivity() {
 
         observeState()
 
+        setClickListeners()
+
         viewModel.getUser(userName)
+    }
+
+    private fun setClickListeners() {
+        binding.btnRetry.setOnClickListener {
+            finish()
+        }
     }
 
     private fun observeState() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.state.collect { state ->
                     when (state) {
                         UserDetailsState.Loading -> {

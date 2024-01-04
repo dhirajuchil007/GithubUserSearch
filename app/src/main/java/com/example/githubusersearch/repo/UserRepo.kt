@@ -24,4 +24,52 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
             GithubResult.Error(e.message)
         }
     }
+
+    suspend fun getFollowers(
+        userName: String,
+        page: Int,
+        perPage: Int
+    ): GithubResult<List<UserNetworkModel>?> {
+        return try {
+            val response = apiService.getFollowers(userName, page, perPage)
+            if (response.isSuccessful) {
+                val followers = response.body()
+                GithubResult.Success(followers)
+            } else {
+                if (response.code() == 404)
+                    GithubResult.Error("User $userName not found")
+                else if (response.code() == 403)
+                    GithubResult.Error("API rate limit exceeded")
+                else
+                    GithubResult.Error(response.message())
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            GithubResult.Error(e.message)
+        }
+    }
+
+    suspend fun getFollowing(
+        userName: String,
+        page: Int,
+        perPage: Int
+    ): GithubResult<List<UserNetworkModel>?> {
+        return try {
+            val response = apiService.getFollowing(userName, page, perPage)
+            if (response.isSuccessful) {
+                val following = response.body()
+                GithubResult.Success(following)
+            } else {
+                if (response.code() == 404)
+                    GithubResult.Error("User $userName not found")
+                else if (response.code() == 403)
+                    GithubResult.Error("API rate limit exceeded")
+                else
+                    GithubResult.Error(response.message())
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            GithubResult.Error(e.message)
+        }
+    }
 }

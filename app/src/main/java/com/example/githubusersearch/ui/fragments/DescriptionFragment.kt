@@ -34,6 +34,7 @@ class DescriptionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[UserDetailsViewModel::class.java]
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -42,7 +43,10 @@ class DescriptionFragment : Fragment() {
                     when (it) {
                         is UserDetailsState.ShowUser -> {
                             binding.apply {
-                                txtDescription.text = it.user?.description
+                                if (it.user?.description.isNullOrEmpty())
+                                    txtDescription.text = getString(R.string.no_description)
+                                else
+                                    txtDescription.text = it.user?.description
                             }
                         }
 
@@ -56,6 +60,6 @@ class DescriptionFragment : Fragment() {
             }
         }
 
-        super.onViewCreated(view, savedInstanceState)
+
     }
 }
