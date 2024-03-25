@@ -1,5 +1,8 @@
 package com.example.githubusersearch.repo
 
+import com.example.githubusersearch.domain.NetworkError
+import com.example.githubusersearch.domain.Result
+import com.example.githubusersearch.domain.getNetworkErrorFromCode
 import com.example.githubusersearch.network.api.ApiService
 import com.example.githubusersearch.network.model.UserNetworkModel
 import javax.inject.Inject
@@ -7,21 +10,18 @@ import javax.inject.Inject
 
 class UserRepo @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun getUser(userName: String): GithubResult<UserNetworkModel?> {
+    suspend fun getUser(userName: String): Result<UserNetworkModel?, NetworkError> {
         return try {
             val response = apiService.getUsers(userName)
             if (response.isSuccessful) {
                 val user = response.body()
-                GithubResult.Success(user)
+                Result.Success(user)
             } else {
-                if (response.code() == 404)
-                    GithubResult.Error("User $userName not found")
-                else
-                    GithubResult.Error(response.message())
+                Result.Error(getNetworkErrorFromCode(response.code() ?: 0))
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            GithubResult.Error(e.message)
+            Result.Error(NetworkError.UNKNOWN)
         }
     }
 
@@ -29,23 +29,18 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
         userName: String,
         page: Int,
         perPage: Int
-    ): GithubResult<List<UserNetworkModel>?> {
+    ): Result<List<UserNetworkModel>?, NetworkError> {
         return try {
             val response = apiService.getFollowers(userName, page, perPage)
             if (response.isSuccessful) {
                 val followers = response.body()
-                GithubResult.Success(followers)
+                Result.Success(followers)
             } else {
-                if (response.code() == 404)
-                    GithubResult.Error("User $userName not found")
-                else if (response.code() == 403)
-                    GithubResult.Error("API rate limit exceeded")
-                else
-                    GithubResult.Error(response.message())
+                Result.Error(getNetworkErrorFromCode(response.code() ?: 0))
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            GithubResult.Error(e.message)
+            Result.Error(NetworkError.UNKNOWN)
         }
     }
 
@@ -53,23 +48,18 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
         userName: String,
         page: Int,
         perPage: Int
-    ): GithubResult<List<UserNetworkModel>?> {
+    ): Result<List<UserNetworkModel>?, NetworkError> {
         return try {
             val response = apiService.getFollowing(userName, page, perPage)
             if (response.isSuccessful) {
                 val following = response.body()
-                GithubResult.Success(following)
+                Result.Success(following)
             } else {
-                if (response.code() == 404)
-                    GithubResult.Error("User $userName not found")
-                else if (response.code() == 403)
-                    GithubResult.Error("API rate limit exceeded")
-                else
-                    GithubResult.Error(response.message())
+                Result.Error(getNetworkErrorFromCode(response.code() ?: 0))
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            GithubResult.Error(e.message)
+            Result.Error(NetworkError.UNKNOWN)
         }
     }
 }

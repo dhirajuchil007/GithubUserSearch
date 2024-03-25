@@ -1,17 +1,16 @@
 package com.example.githubusersearch.domain
 
 import com.example.githubusersearch.domain.model.UserDomainModel
-import com.example.githubusersearch.repo.GithubResult
 import com.example.githubusersearch.repo.UserRepo
 import javax.inject.Inject
 
 class GetUserUseCase @Inject constructor(private val userRepo: UserRepo) {
 
-    suspend fun execute(userName:String): GithubResult<UserDomainModel> {
+    suspend fun execute(userName: String): Result<UserDomainModel, NetworkError> {
         return when (val result = userRepo.getUser(userName)) {
-            is GithubResult.Success -> {
+            is Result.Success -> {
                 val user = result.data
-                GithubResult.Success(
+                Result.Success(
                     UserDomainModel(
                         avatarUrl = user?.avatar_url ?: "",
                         username = user?.login ?: "",
@@ -23,12 +22,8 @@ class GetUserUseCase @Inject constructor(private val userRepo: UserRepo) {
                 )
             }
 
-            is GithubResult.Error -> {
-                GithubResult.Error(result.message)
-            }
-
-            is GithubResult.Loading -> {
-                GithubResult.Loading()
+            is Result.Error -> {
+                Result.Error(result.error)
             }
         }
 

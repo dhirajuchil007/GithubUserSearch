@@ -1,18 +1,16 @@
 package com.example.githubusersearch.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.githubusersearch.domain.GetUserUseCase
-import com.example.githubusersearch.repo.GithubResult
+import com.example.githubusersearch.domain.Result
 import com.example.githubusersearch.ui.paging.UserPager
 import com.example.githubusersearch.ui.states.UserDetailsState
 import com.example.githubusersearch.ui.states.UserFollowState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,16 +35,12 @@ class UserDetailsViewModel @Inject constructor(
         state.value = UserDetailsState.Loading
         viewModelScope.launch {
             when (val result = getUserUseCase.execute(userName)) {
-                is GithubResult.Success -> {
+                is Result.Success -> {
                     state.value = UserDetailsState.ShowUser(result.data)
                 }
 
-                is GithubResult.Error -> {
-                    state.value = UserDetailsState.Error(result.message)
-                }
-
-                is GithubResult.Loading -> {
-                    state.value = UserDetailsState.Loading
+                is Result.Error -> {
+                    state.value = UserDetailsState.Error(result.error.name)
                 }
             }
         }

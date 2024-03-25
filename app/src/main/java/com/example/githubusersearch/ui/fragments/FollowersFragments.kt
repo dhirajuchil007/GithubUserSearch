@@ -83,7 +83,7 @@ class FollowersFragments : Fragment() {
 
     private fun getUserData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.state.collect {
                     when (it) {
                         is UserDetailsState.ShowUser -> {

@@ -1,18 +1,17 @@
 package com.example.githubusersearch.domain
 
 import com.example.githubusersearch.domain.model.UserDomainModel
-import com.example.githubusersearch.repo.GithubResult
 
 import com.example.githubusersearch.repo.UserRepo
 import javax.inject.Inject
 
 class GetFollowingUseCase @Inject constructor(val userRepo: UserRepo) {
 
-    suspend fun execute(userName: String, page: Int): GithubResult<List<UserDomainModel>> {
+    suspend fun execute(userName: String, page: Int): Result<List<UserDomainModel>, NetworkError> {
         return when (val result = userRepo.getFollowing(userName, page, 20)) {
-            is GithubResult.Success -> {
+            is Result.Success -> {
                 val followers = result.data
-                GithubResult.Success(followers?.map {
+                Result.Success(followers?.map {
                     UserDomainModel(
                         avatarUrl = it.avatar_url ?: "",
                         username = it.login ?: "",
@@ -24,12 +23,8 @@ class GetFollowingUseCase @Inject constructor(val userRepo: UserRepo) {
                 } ?: emptyList())
             }
 
-            is GithubResult.Error -> {
-                GithubResult.Error(result.message)
-            }
-
-            is GithubResult.Loading -> {
-                GithubResult.Loading()
+            is Result.Error -> {
+                Result.Error(result.error)
             }
         }
     }

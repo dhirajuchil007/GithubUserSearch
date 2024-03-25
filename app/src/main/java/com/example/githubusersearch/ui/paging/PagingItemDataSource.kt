@@ -2,11 +2,12 @@ package com.example.githubusersearch.ui.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.githubusersearch.domain.NetworkError
+import com.example.githubusersearch.domain.Result
 import com.example.githubusersearch.domain.model.UserDomainModel
-import com.example.githubusersearch.repo.GithubResult
 import javax.inject.Inject
 
-class PagingItemDataSource @Inject constructor(private val apiCallFunction: suspend (page: Int) -> GithubResult<List<UserDomainModel>>) :
+class PagingItemDataSource @Inject constructor(private val apiCallFunction: suspend (page: Int) -> Result<List<UserDomainModel>, NetworkError>) :
     PagingSource<Int, UserDomainModel>() {
 
     override fun getRefreshKey(state: PagingState<Int, UserDomainModel>): Int? {
@@ -20,7 +21,7 @@ class PagingItemDataSource @Inject constructor(private val apiCallFunction: susp
         val page = params.key ?: 1
 
         return when (val result = apiCallFunction(page)) {
-            is GithubResult.Success -> {
+            is Result.Success -> {
                 val users = result.data
                 LoadResult.Page(
                     data = users ?: emptyList(),
@@ -29,12 +30,8 @@ class PagingItemDataSource @Inject constructor(private val apiCallFunction: susp
                 )
             }
 
-            is GithubResult.Error -> {
-                LoadResult.Error(Exception(result.message))
-            }
-
-            is GithubResult.Loading -> {
-                LoadResult.Error(Exception("Loading"))
+            is Result.Error -> {
+                LoadResult.Error(Exception(result.error.name))
             }
         }
     }

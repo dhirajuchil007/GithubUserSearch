@@ -44,7 +44,7 @@ object NetworkModule {
             val newRequest = request.newBuilder()
                 .header(
                     "Authorization",
-                    "Bearer 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"
+                    "Bearer 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"
                 )
                 .build()
             chain.proceed(newRequest)
