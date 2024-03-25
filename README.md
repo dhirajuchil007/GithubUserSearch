@@ -2,7 +2,7 @@
 
 App uses Github API to get details of a username like description, followers, following.
 You can tap on followers to open their profiles.
-Note: To run this app you need to add your github personal access token  in Constants file.
+<br><b> Note: To run this app please add your GitHub personal access token in Constants.kt file.</b>
 
 <h3>App demonstrates:</h3>
 <ul>
