@@ -1,5 +1,6 @@
 package com.example.githubusersearch.di
 
+import com.example.githubusersearch.network.Constants
 import com.example.githubusersearch.network.api.ApiService
 import dagger.Module
 import dagger.Provides
@@ -44,7 +45,7 @@ object NetworkModule {
             val newRequest = request.newBuilder()
                 .header(
                     "Authorization",
-                    "Bearer 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"
+                    "Bearer ${Constants.GITHUB_TOKEN}"
                 )
                 .build()
             chain.proceed(newRequest)
