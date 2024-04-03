@@ -2,6 +2,21 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ProfileSummaryPreview">
+        <State />
+      </entry>
+      <entry key="SearchScreenPreview">
+        <State />
+      </entry>
+      <entry key="UserDetailsComposeActivity">
+        <State />
+      </entry>
+      <entry key="UserProfileScreenPreview">
+        <State />
+      </entry>
+      <entry key="UsersListPreview">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
