@@ -42,7 +42,8 @@ class UserProfileViewModelCompose @Inject constructor(
                     userDetails = UserProfileState.Success(user.data)
                 }
 
-                is Result.Error -> UserProfileState.Error(user.error.name ?: "Unknown Error")
+                is Result.Error -> userDetails =
+                    UserProfileState.Error(user.error.name ?: "Unknown Error")
             }
         }
 

@@ -5,6 +5,7 @@ import com.example.githubusersearch.domain.Result
 import com.example.githubusersearch.domain.getNetworkErrorFromCode
 import com.example.githubusersearch.network.api.ApiService
 import com.example.githubusersearch.network.model.UserNetworkModel
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 
@@ -21,8 +22,15 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Result.Error(NetworkError.UNKNOWN)
+            return parseException(e)
         }
+    }
+
+    private fun <T> parseException(e: Exception): Result<T?, NetworkError> {
+        return if (e is UnknownHostException) {
+            Result.Error(NetworkError.CHECK_CONNECTION)
+        } else
+            Result.Error(NetworkError.UNKNOWN)
     }
 
     suspend fun getFollowers(
@@ -40,7 +48,7 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Result.Error(NetworkError.UNKNOWN)
+            return parseException(e)
         }
     }
 
@@ -59,7 +67,7 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Result.Error(NetworkError.UNKNOWN)
+            return parseException(e)
         }
     }
 }

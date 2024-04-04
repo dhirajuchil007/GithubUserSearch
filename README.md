@@ -4,15 +4,21 @@ App uses Github API to get details of a username like description, followers, fo
 You can tap on followers to open their profiles.
 <br><b> Note: To run this app please add your GitHub personal access token in Constants.kt file.</b>
 
+<b>Note: Jetpack compose/XML flow can  be toggled by changing launcher activity in manifest
+
 <h3>App demonstrates:</h3>
 <ul>
 <li>MVVM clean architecture</li>
+<li>Jetpack Compose</li>
 <li>Dagger Hilt DI</li>
 <li>Retrofit</li>
 <li>Kotlin Coroutines</li>
 <li>Kotlin Flows
 <li>Paging 3</li>
+<li>compose navigation</li>
 </ul>
+
+
 
 <h3>Screenshots:</h3>
 <img width="150" alt="Screenshot 2024-03-25 at 10 22 02 AM" src="https://github.com/dhirajuchil007/GithubUserSearch/assets/11347648/a3b8fa5c-0568-484b-abbe-52c2133de7ba">

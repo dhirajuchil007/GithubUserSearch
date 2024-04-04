@@ -12,6 +12,7 @@ public enum class NetworkError : Error {
     REQUEST_TIMEOUT,
     UNKNOWN,
     SERVER_ERROR,
+    CHECK_CONNECTION
 }
 
 fun getNetworkErrorFromCode(code: Int): NetworkError {

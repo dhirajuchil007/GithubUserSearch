@@ -1,11 +1,20 @@
 package com.example.githubusersearch.ui_compose.ui.components
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.githubusersearch.R
 import com.example.githubusersearch.domain.model.UserDomainModel
 import kotlinx.coroutines.flow.Flow
 
@@ -41,17 +50,32 @@ fun handlePagingResult(
 
     return when {
         loadState.refresh is LoadState.Loading -> {
-            // TODO: add loading UI
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
+            }
             false
         }
 
         error != null -> {
-            // TODO: add error
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                error.error.message?.let {
+                    Text(
+                        text = it, style = MaterialTheme.typography.bodyMedium,
+                        color = colorResource(id = R.color.body)
+                    )
+                }
+            }
             false
         }
 
         users.itemCount == 0 -> {
-            // TODO: show now items
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(
+                    text = "No users found",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = colorResource(id = R.color.body)
+                )
+            }
             false
         }
 

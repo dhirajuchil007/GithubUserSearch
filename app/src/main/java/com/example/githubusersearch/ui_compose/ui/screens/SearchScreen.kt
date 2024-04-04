@@ -43,6 +43,10 @@ fun SearchScreen(navigateToUserDetails: (String) -> Unit) {
     var text by rememberSaveable {
         mutableStateOf("")
     }
+    var errorText by remember {
+        mutableStateOf("")
+    }
+
 
     Column(
         modifier = Modifier
@@ -59,32 +63,53 @@ fun SearchScreen(navigateToUserDetails: (String) -> Unit) {
             )
         SearchBar(onValueChange = {
             text = it
+            errorText = if (text.isEmpty()) {
+                "Username cannot be empty"
+            } else {
+                ""
+            }
         }, text = text, onSearch = {
-            navigateToUserDetails(text)
-        })
-        Button(
-            onClick = {
+            if (validateText(text))
                 navigateToUserDetails(text)
+            else
+                errorText = "Username cannot be empty"
+        })
+        Text(text = errorText, color = Color.Red)
+        Button(
+            modifier = Modifier.padding(top = MEDIUM_PADDING),
+            onClick = {
+                if (validateText(text))
+                    navigateToUserDetails(text)
+                else
+                    errorText = "Username cannot be empty"
             }, colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.primary)
 
             )
         ) {
-            Text(text = "Search", color = Color.White)
+            Text(text = "Search")
         }
     }
 
 }
 
+fun validateText(text: String): Boolean {
+    return text.isNotEmpty()
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(onValueChange: (String) -> Unit, text: String, onSearch: () -> Unit = {}) {
+fun SearchBar(
+    onValueChange: (String) -> Unit,
+    text: String,
+    onSearch: () -> Unit = {}
+) {
     TextField(
         value = text,
         onValueChange = onValueChange,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MEDIUM_PADDING)
+            .padding(top = MEDIUM_PADDING, start = MEDIUM_PADDING, end = MEDIUM_PADDING)
             .searchBarBorder(),
         placeholder = {
             Text(

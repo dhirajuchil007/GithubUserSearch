@@ -19,11 +19,8 @@ fun NavGraph() {
 
     NavHost(
         navController = controller,
-        startDestination = Route.USER_SEARCH,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }) {
+        startDestination = Route.USER_SEARCH
+    ) {
         composable(route = Route.USER_SEARCH) {
             SearchScreen {
                 controller.navigate(
