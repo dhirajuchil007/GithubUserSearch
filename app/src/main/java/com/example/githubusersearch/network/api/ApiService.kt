@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("users/{userName}")
-    suspend fun getUsers(@Path("userName") userName: String): Response<UserNetworkModel>
+    suspend fun getUser(@Path("userName") userName: String): Response<UserNetworkModel>
 
     @GET("users/{userName}/followers")
     suspend fun getFollowers(

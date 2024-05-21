@@ -21,6 +21,9 @@ android {
             useSupportLibrary = true
         }
     }
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 
     buildTypes {
         release {
@@ -79,8 +82,9 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.49")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     //lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
@@ -94,7 +98,7 @@ dependencies {
 
     //paging
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
-    implementation ("androidx.paging:paging-compose:3.2.1")
+    implementation("androidx.paging:paging-compose:3.2.1")
 
     //Coil
     implementation("io.coil-kt:coil-compose:2.4.0")
@@ -106,7 +110,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation ("androidx.compose.foundation:foundation:1.6.4")
+    implementation("androidx.compose.foundation:foundation:1.6.4")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -114,7 +118,12 @@ dependencies {
 
 
     //testing
-    testImplementation("junit:junit:5.0-SNAPSHOT")
+    val mockkVersion = "1.13.11"
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    testImplementation("io.mockk:mockk-android:${mockkVersion}")
+    testImplementation("io.mockk:mockk-agent:${mockkVersion}")
+    testImplementation("com.google.truth:truth:1.4.2")
 }

@@ -13,7 +13,7 @@ class UserRepo @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getUser(userName: String): Result<UserNetworkModel?, NetworkError> {
         return try {
-            val response = apiService.getUsers(userName)
+            val response = apiService.getUser(userName)
             if (response.isSuccessful) {
                 val user = response.body()
                 Result.Success(user)
