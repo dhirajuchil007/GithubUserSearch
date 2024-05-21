@@ -16,6 +16,7 @@ You can tap on followers to open their profiles.
 <li>Kotlin Flows
 <li>Paging 3</li>
 <li>compose navigation</li>
+<li>Unit testing with JUnit 5 and Mockk</li>
 </ul>
 
 
