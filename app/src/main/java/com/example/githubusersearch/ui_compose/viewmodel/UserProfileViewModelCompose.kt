@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.githubusersearch.domain.GetUserUseCase
 import com.example.githubusersearch.domain.Result
-import com.example.githubusersearch.domain.model.UserDomainModel
-import com.example.githubusersearch.ui.states.UserDetailsState
 import com.example.githubusersearch.ui_compose.ui.state.UserProfileState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -37,7 +35,7 @@ class UserProfileViewModelCompose @Inject constructor(
         }
         userDetails = UserProfileState.Loading
         viewModelScope.launch {
-            when (val user = getUserUseCase.execute(username)) {
+            when (val user = getUserUseCase.invoke(username)) {
                 is Result.Success -> {
                     userDetails = UserProfileState.Success(user.data)
                 }

@@ -23,7 +23,7 @@ class UserPager @Inject constructor(
             ),
             pagingSourceFactory = {
                 PagingItemDataSource(
-                    apiCallFunction = { page -> getFollowersUseCase.execute(userName, page) }
+                    apiCallFunction = { page -> getFollowersUseCase(userName, page) }
                 )
             }
         ).flow
@@ -38,7 +38,7 @@ class UserPager @Inject constructor(
             ),
             pagingSourceFactory = {
                 PagingItemDataSource(
-                    apiCallFunction = { page -> getFollowingUseCase.execute(userName, page) }
+                    apiCallFunction = { page -> getFollowingUseCase(userName, page) }
                 )
             }
         ).flow

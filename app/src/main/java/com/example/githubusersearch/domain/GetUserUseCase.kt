@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class GetUserUseCase @Inject constructor(private val userRepo: UserRepo) {
 
-    suspend fun execute(userName: String): Result<UserDomainModel, NetworkError> {
+    suspend operator fun invoke(userName: String): Result<UserDomainModel, NetworkError> {
         return when (val result = userRepo.getUser(userName)) {
             is Result.Success -> {
                 val user = result.data

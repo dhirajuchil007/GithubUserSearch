@@ -7,7 +7,10 @@ import javax.inject.Inject
 
 class GetFollowingUseCase @Inject constructor(val userRepo: UserRepo) {
 
-    suspend fun execute(userName: String, page: Int): Result<List<UserDomainModel>, NetworkError> {
+    suspend operator fun invoke(
+        userName: String,
+        page: Int
+    ): Result<List<UserDomainModel>, NetworkError> {
         return when (val result = userRepo.getFollowing(userName, page, 20)) {
             is Result.Success -> {
                 val followers = result.data

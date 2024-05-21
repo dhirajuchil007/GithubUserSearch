@@ -34,7 +34,7 @@ class UserDetailsViewModel @Inject constructor(
 
         state.value = UserDetailsState.Loading
         viewModelScope.launch {
-            when (val result = getUserUseCase.execute(userName)) {
+            when (val result = getUserUseCase(userName)) {
                 is Result.Success -> {
                     state.value = UserDetailsState.ShowUser(result.data)
                 }

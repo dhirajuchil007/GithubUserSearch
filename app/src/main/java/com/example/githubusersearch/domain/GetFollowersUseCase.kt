@@ -6,7 +6,10 @@ import javax.inject.Inject
 
 class GetFollowersUseCase @Inject constructor(val userRepo: UserRepo) {
 
-    suspend fun execute(userName: String, page: Int): Result<List<UserDomainModel>, NetworkError> {
+    suspend operator fun invoke(
+        userName: String,
+        page: Int
+    ): Result<List<UserDomainModel>, NetworkError> {
 
         return when (val result = userRepo.getFollowers(userName, page, 20)) {
             is Result.Error -> Result.Error(result.error)
