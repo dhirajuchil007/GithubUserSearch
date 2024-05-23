@@ -11,16 +11,14 @@ import javax.inject.Inject
 
 class UserPager @Inject constructor(
     val getFollowersUseCase: GetFollowersUseCase,
-    val getFollowingUseCase: GetFollowingUseCase
+    val getFollowingUseCase: GetFollowingUseCase,
+    val pagingConfig: PagingConfig
 ) {
 
 
     fun getFollowersPage(userName: String): Flow<PagingData<UserDomainModel>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                maxSize = 100
-            ),
+            config = pagingConfig,
             pagingSourceFactory = {
                 PagingItemDataSource(
                     apiCallFunction = { page -> getFollowersUseCase(userName, page) }

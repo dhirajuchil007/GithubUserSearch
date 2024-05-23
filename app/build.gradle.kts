@@ -82,6 +82,7 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.49")
+    implementation("androidx.paging:paging-testing-android:3.3.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
@@ -91,7 +92,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
     //coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    val coroutinesVersion = "1.7.3"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     //glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
@@ -126,4 +128,6 @@ dependencies {
     testImplementation("io.mockk:mockk-android:${mockkVersion}")
     testImplementation("io.mockk:mockk-agent:${mockkVersion}")
     testImplementation("com.google.truth:truth:1.4.2")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
 }

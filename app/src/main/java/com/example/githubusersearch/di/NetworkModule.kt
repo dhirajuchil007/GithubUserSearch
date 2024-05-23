@@ -1,5 +1,6 @@
 package com.example.githubusersearch.di
 
+import androidx.paging.PagingConfig
 import com.example.githubusersearch.network.Constants
 import com.example.githubusersearch.network.api.ApiService
 import dagger.Module
@@ -67,6 +68,12 @@ object NetworkModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesPagingConfig(): PagingConfig {
+        return PagingConfig(pageSize = 10, maxSize = 100)
     }
 }
 

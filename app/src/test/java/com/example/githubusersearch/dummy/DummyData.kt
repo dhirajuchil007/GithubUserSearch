@@ -1,5 +1,6 @@
 package com.example.githubusersearch.dummy
 
+import com.example.githubusersearch.domain.model.UserDomainModel
 import com.example.githubusersearch.network.model.UserNetworkModel
 import retrofit2.Response
 
@@ -43,9 +44,45 @@ fun getDummyUserNetworkModelResponse(dummyUserNetworkModel: UserNetworkModel): R
 }
 
 fun getDummyUsersList() = listOf(
-    getDummyUserNetworkModel(), getDummyUserNetworkModel(), getDummyUserNetworkModel()
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel(),
+    getDummyUserNetworkModel()
 )
 
 fun getDummyUsersListResponse(dummyUsersList: List<UserNetworkModel>): Response<List<UserNetworkModel>> {
     return Response.success(dummyUsersList)
+}
+
+fun getDummyUserDomainModel(): UserDomainModel {
+    return with(getDummyUserNetworkModel()) {
+
+        UserDomainModel(
+            avatarUrl = avatar_url ?: "",
+            username = login ?: "",
+            name = name ?: "",
+            followers = followers ?: 0,
+            following = following ?: 0,
+            description = bio ?: ""
+        )
+    }
+}
+
+fun getDummyUsersListDomainModel(): List<UserDomainModel> {
+    return getDummyUsersList().map {
+        UserDomainModel(
+            avatarUrl = it.avatar_url ?: "",
+            username = it.login ?: "",
+            name = it.name ?: "",
+            followers = it.followers ?: 0,
+            following = it.following ?: 0,
+            description = it.bio ?: ""
+        )
+    }
 }

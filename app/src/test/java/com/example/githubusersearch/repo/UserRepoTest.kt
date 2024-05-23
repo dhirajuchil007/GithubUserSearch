@@ -4,13 +4,10 @@ import com.example.githubusersearch.domain.NetworkError
 import com.example.githubusersearch.domain.Result
 import com.example.githubusersearch.dummy.getDummyUserNetworkModel
 import com.example.githubusersearch.dummy.getDummyUserNetworkModelResponse
-import com.example.githubusersearch.dummy.getDummyUsersList
-import com.example.githubusersearch.dummy.getDummyUsersListResponse
 import com.example.githubusersearch.network.api.ApiService
 import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
@@ -18,7 +15,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import retrofit2.Response
 import java.net.UnknownHostException
@@ -29,12 +25,12 @@ class UserRepoTest {
     @BeforeEach
     fun setUp() {
         MockKAnnotations.init(this)
+        sut = UserRepo(apiService)
     }
 
     var apiService: ApiService = mockk()
 
-    val sut = UserRepo(apiService)
-
+    lateinit var sut: UserRepo
 
 
     @Test
