@@ -15,8 +15,13 @@ You can tap on followers to open their profiles.
 <li>Kotlin Coroutines</li>
 <li>Kotlin Flows
 <li>Paging 3</li>
-<li>compose navigation</li>
+<li>Compose navigation</li>
 <li>Unit testing with JUnit 5 and Mockk</li>
+</ul>
+
+<h3>To Do:</h3>
+<ul>
+<li>Deep Linking</li>
 </ul>
 
 
