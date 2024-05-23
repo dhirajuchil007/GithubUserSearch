@@ -19,7 +19,7 @@ You can tap on followers to open their profiles.
 <li>Unit testing with JUnit 5 and Mockk</li>
 </ul>
 
-<h3>To Do:</h3>
+<h3>To Do: </h3>
 <ul>
 <li>Deep Linking</li>
 </ul>
